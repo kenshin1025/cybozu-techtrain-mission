@@ -63,10 +63,10 @@ export default {
     test() {
       firebase
         .firestore()
-        .collection("companys")
+        .collection("users")
         .get()
-        .then(data => {
-          data.forEach(doc => {
+        .then(snapshot => {
+          snapshot.forEach(doc => {
             console.log(doc.id, "=>", doc.data());
           });
         })
