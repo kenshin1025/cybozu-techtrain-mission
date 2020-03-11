@@ -2,9 +2,9 @@
   <v-layout justify-center align-center>
     <v-flex xs12 sm8 md6>
       <v-container fluid>
-        <v-row dense>
-          <v-col cols="12" v-for="(company, i) in companys" :key="i">
-            <ListCell :company="company" :id="companyIds[i]"/>
+        <v-row>
+          <v-col cols="12">
+            <DetailCard :company="company"></DetailCard>
           </v-col>
         </v-row>
       </v-container>
@@ -13,17 +13,16 @@
 </template>
 
 <script>
-import ListCell from "@/components/ListCell";
+import DetailCard from "@/components/DetailCard";
 import firebase from "@/plugins/firebase";
 
 export default {
   components: {
-    ListCell
+    DetailCard
   },
   data() {
     return {
-      companyIds: [],
-      companys: []
+      company: {}
     };
   },
   methods: {
@@ -31,14 +30,10 @@ export default {
       firebase
         .firestore()
         .collection("companys")
+        .doc(this.$route.params.id)
         .get()
-        .then(snapshot => {
-          this.companyIds == [];
-          this.companys == [];
-          snapshot.forEach(doc => {
-            this.companyIds.push(doc.id);
-            this.companys.push(doc.data());
-          });
+        .then(doc => {
+          this.company = doc.data();
         })
         .catch(err => {
           console.log("Error getting documents", err);

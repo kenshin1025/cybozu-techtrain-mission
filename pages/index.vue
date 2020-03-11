@@ -49,7 +49,7 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import VuetifyLogo from "~/components/VuetifyLogo.vue";
-import firebase from "../plugins/firebase";
+import firebase from "@/plugins/firebase";
 
 export default {
   components: {
